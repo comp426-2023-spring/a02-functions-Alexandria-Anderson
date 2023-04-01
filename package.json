@@ -1,0 +1,23 @@
+{
+  "name": "a02-functions-alexandria-anderson",
+  "version": "1.0.0",
+  "description": "A02",
+  "main": "cli.js",
+  "type": "module",
+  "scripts": {
+    "test": "node cli.js -n 35.92 -w 79.05 -z America/New_York"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson.git"
+  },
+  "author": "Alexandria-Anderson",
+  "license": "GPL-3.0-or-later",
+  "bin": {
+    "galosh.js": "cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson/issues"
+  },
+  "homepage": "https://github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson#readme"
+}
