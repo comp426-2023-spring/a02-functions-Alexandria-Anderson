@@ -40,7 +40,7 @@ if (args.z === undefined){
     const timezone = moment.tz.guess();
    console.log(timezone)
 }
-let timezoneP = args.z.replace("/", "%2F");
+//let timezoneP = args.z.replace("/", "%2F");
 
 console.log(timezoneP)
 let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&daily=precipitation_hours,&timezone=${timezoneP}`
