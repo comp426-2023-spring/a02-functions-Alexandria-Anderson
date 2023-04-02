@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson/issues"
   },
-  "homepage": "https://github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson#readme"
+  "homepage": "https://github.com/comp426-2023-spring/a02-functions-Alexandria-Anderson#readme",
+  "dependencies": {
+    "moment-timezone": "^0.5.43"
+  }
 }
