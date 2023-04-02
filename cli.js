@@ -2,7 +2,6 @@
 import moment from 'moment-timezone'
 import minimist from 'minimist';
 import fetch from 'node-fetch';
-import fs from 'fs';
 
 
 // Get command-line arguments
@@ -10,7 +9,7 @@ const args = minimist(process.argv.slice(2));
 // Put args onto STDOUT
 console.log(args)
 // Get a URL
-if (process.argv[2] === '-h'){ //works
+if (process.argv[2] === '-h'){ //Works!!
     console.log(
     'Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE\n'+
     '    -h            Show this help message and exit.\n'+
@@ -22,33 +21,45 @@ if (process.argv[2] === '-h'){ //works
     );
     process.exit(0);
 }
+//making the timezone default if not defined
+let timezone = args.z;
+if (args.z === undefined){
+    timezone = moment.tz.guess();
+    console.log(timezone)
+}
+//defaulting d to tommorrow
+if (args.d === undefined){
+    args.d = 1;
+}
+
+//reformating long and lat
 let lat = null;
 if (args.n !== undefined){
      lat = parseFloat(args.n);
 } else {
-     lat = parseFloat(args.s);
+     lat = -parseFloat(args.s);
 }
 let long = null;
 if (args.e !== undefined){
      long = parseFloat(args.e);
 } else {
-     long = parseFloat(args.w);
+     long = -parseFloat(args.w);
 }
-
-//timezone
-if (args.z === undefined){
-    const timezone = moment.tz.guess();
-   console.log(timezone)
-}
-
-if (args.z === undefined) process.exit(1);
-let timezoneP = args.z.replace("/", "%2F");
-   
-
-
+//creating URL to send to API
+let timezoneP = timezone.replace("/", "%2F");
 let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&daily=precipitation_hours,&timezone=${timezoneP}`
 
-//checking to see which day is requested WIP
+const response = await fetch(url) //Works!! Retrieving data
+const data = await response.json();
+let dataString = JSON.stringify(data);
+console.log(data)
+
+if (data.daily.precipitation_hours[args.d] > 0){//Works!! Determines if you need galoshes for the given day
+    console.log("You might need your galoshes");
+} else if (data.daily.precipitation_hours[args.d] === 0){
+    console.log("You will not need your galoshes")
+}
+
 if (args.d === 0){
     //const response = await fetch(url)
     console.log('today');
@@ -59,12 +70,6 @@ if (args.d === 0){
     console.log(`in ${args.d} days.`)
 }
 
-const response = await fetch(url) //works
-// Store the response JSON data in an object
-const data = await response.json();
-// Echo back the data to SDOUT
-let dataString = JSON.stringify(data);
-console.log(data)
 if (args.j){//WIP
    /* should echo the JSON that your app ingested
     from Open-Meteo onto STDOUT and exit 0. If you 
@@ -81,16 +86,6 @@ if (args.j){//WIP
 }
 
 
-
-if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
-    console.log("invalid")
-   // process.exit(1);
-}
-
- 
-
-
-// need function to take in parcipitation and tell whether or not you need galoshes
 
 //some clues here:https://github.com/comp426-2023-spring/schedule/blob/main/06-manipulating-data.md
 
