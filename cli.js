@@ -4,12 +4,13 @@ import minimist from 'minimist';
 import fetch from 'node-fetch';
 
 
+
 // Get command-line arguments
 const args = minimist(process.argv.slice(2));
 // Put args onto STDOUT
 console.log(args)
 // Get a URL
-if (process.argv[2] === '-h'){ //Works!!
+if (process.argv[2] === '-h'){ //works
     console.log(
     'Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE\n'+
     '    -h            Show this help message and exit.\n'+
@@ -21,7 +22,7 @@ if (process.argv[2] === '-h'){ //Works!!
     );
     process.exit(0);
 }
-//making the timezone default if not defined
+//makeing the timezone default if not defined
 let timezone = args.z;
 if (args.z === undefined){
     timezone = moment.tz.guess();
@@ -31,25 +32,29 @@ if (args.z === undefined){
 if (args.d === undefined){
     args.d = 1;
 }
-
-//reformating long and lat
+//validating long and lat
 let lat = null;
-if (args.n !== undefined){
+let long = null
+if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
+   if (args.n !== undefined){
      lat = parseFloat(args.n);
 } else {
      lat = -parseFloat(args.s);
-}
-let long = null;
+} 
 if (args.e !== undefined){
      long = parseFloat(args.e);
 } else {
      long = -parseFloat(args.w);
 }
+}
+//reformating long and lat
+console.log(lat)
+console.log(long)
 //creating URL to send to API
 let timezoneP = timezone.replace("/", "%2F");
 let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&daily=precipitation_hours,&timezone=${timezoneP}`
 
-const response = await fetch(url) //Works!! Retrieving data
+const response = await fetch(url) //Works!!
 const data = await response.json();
 let dataString = JSON.stringify(data);
 console.log(data)
@@ -86,6 +91,12 @@ if (args.j){//WIP
 }
 
 
+
+
+ 
+
+
+// need function to take in parcipitation and tell whether or not you need galoshes
 
 //some clues here:https://github.com/comp426-2023-spring/schedule/blob/main/06-manipulating-data.md
 
