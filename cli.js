@@ -57,7 +57,7 @@ let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lo
 const response = await fetch(url) //Works!!
 const data = await response.json();
 console.log(JSON.stringify(data))
-if (data.daily.precipitation_hours[args.d] !== undefined){
+if (data.daily !== undefined){
 if (data.daily.precipitation_hours[args.d] > 0){//Works!! Determines if you need galoshes for the given day
     console.log("You might need your galoshes");
 } else if (data.daily.precipitation_hours[args.d] === 0){
