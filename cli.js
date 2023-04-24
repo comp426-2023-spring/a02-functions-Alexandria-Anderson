@@ -33,8 +33,9 @@ if (args.d === undefined){
 }
 //validating long and lat
 let lat = parseFloat(args.n);
+
 let long = parseFloat(args.e);
-if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
+//if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
    if (args.n !== undefined){
      lat = parseFloat(args.n);
 } else {
@@ -45,7 +46,7 @@ if (args.e !== undefined){
 } else {
      long = -parseFloat(args.w);
 }
-}
+//}
 //reformating long and lat
 console.log(lat)
 console.log(long)
