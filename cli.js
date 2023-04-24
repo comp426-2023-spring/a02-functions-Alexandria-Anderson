@@ -8,8 +8,7 @@ import fetch from 'node-fetch';
 // Get command-line arguments
 const args = minimist(process.argv.slice(2));
 // Put args onto STDOUT
-console.log(args)
-// Get a URL
+//console.log(args)
 if (process.argv[2] === '-h'){ //works
     console.log(
     'Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE\n'+
@@ -26,15 +25,15 @@ if (process.argv[2] === '-h'){ //works
 let timezone = args.z;
 if (args.z === undefined){
     timezone = moment.tz.guess();
-    console.log(timezone)
+   // console.log(timezone)
 }
 //defaulting d to tommorrow
 if (args.d === undefined){
     args.d = 1;
 }
 //validating long and lat
-let lat = null;
-let long = null
+let lat = undefined;
+let long = undefined
 if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
    if (args.n !== undefined){
      lat = parseFloat(args.n);
@@ -56,8 +55,7 @@ let url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lo
 
 const response = await fetch(url) //Works!!
 const data = await response.json();
-let dataString = JSON.stringify(data);
-console.log(data)
+console.log(JSON.stringify(data))
 
 if (data.daily.precipitation_hours[args.d] > 0){//Works!! Determines if you need galoshes for the given day
     console.log("You might need your galoshes");
@@ -89,11 +87,6 @@ if (args.j){//WIP
    
 
 }
-
-
-
-
- 
 
 
 // need function to take in parcipitation and tell whether or not you need galoshes
