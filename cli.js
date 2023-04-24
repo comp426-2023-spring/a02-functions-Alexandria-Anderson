@@ -32,8 +32,8 @@ if (args.d === undefined){
     args.d = 1;
 }
 //validating long and lat
-let lat = undefined;
-let long = undefined
+let lat = parseFloat(args.n);
+let long = parseFloat(args.e);
 if (args.n < 0 || args.e < 0 || args.s > 0 || args.w > 0){
    if (args.n !== undefined){
      lat = parseFloat(args.n);
